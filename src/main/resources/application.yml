@@ -1,0 +1,60 @@
+# 服务器端口
+server:
+  port: 8080
+
+# Spring 核心配置
+spring:
+  # 数据源配置 (MySQL)
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/multi_cache?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: 110110 # 改成你自己的MySQL密码
+
+  # Redis 配置
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    database: 0
+    timeout: 10s
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+# ==================== 多级缓存组件配置 ====================
+# 以下均为默认值，不配置即使用默认值
+multi-cache:
+  caffeine:
+    initial-capacity: 100
+    maximum-size: 10000
+    expire-after-write-minutes: 30
+    expire-after-access-minutes: 5
+  redis:
+    enabled: true
+    key-prefix: "multi-cache"
+  bloom:
+    enabled: true
+    expected-insertions: 100000
+    false-probability: 0.01
+  warmup:
+    core-pool-size: 2
+    max-pool-size: 4
+    timeout-seconds: 120
+
+# MyBatis 配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml  # mapper xml文件路径
+  type-aliases-package: com.zqp.entity  # 实体类包路径
+  configuration:
+    map-underscore-to-camel-case: true  # 下划线转驼峰
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 打印SQL日志
+
+# 日志配置
+logging:
+  level:
+    com.zqp: info
+    org.springframework.web: info
+
