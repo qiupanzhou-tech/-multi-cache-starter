@@ -25,7 +25,7 @@ public class MultiLevelCache {
     private static final Logger log = LoggerFactory.getLogger(MultiLevelCache.class);
 
     /** 空值缓存标记：区分"没缓存过"和"缓存过但值是 null"，防止缓存穿透 */
-    private static final String NULL_MARKER = "__CACHE_NULL__";
+    static final String NULL_MARKER = "__CACHE_NULL__";
 
     private static final Random RANDOM = new Random();
 
@@ -136,7 +136,7 @@ public class MultiLevelCache {
      * 原理：如果所有 Key 在同一时间过期，大量请求同时穿透到 DB → 缓存雪崩
      * 随机化后，过期时间分散到不同时刻，避免集中失效
      */
-    private long addRandomOffset(long baseSeconds) {
+    long addRandomOffset(long baseSeconds) {
         long offset = (long) (baseSeconds * 0.1 * RANDOM.nextDouble());
         // 50% 概率加、50% 概率减
         return RANDOM.nextBoolean() ? baseSeconds + offset : baseSeconds - offset;

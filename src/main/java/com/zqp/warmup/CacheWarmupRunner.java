@@ -4,6 +4,7 @@ import com.zqp.bloom.BloomFilterService;
 import com.zqp.config.MultiCacheProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -45,7 +46,7 @@ public class CacheWarmupRunner implements ApplicationRunner {
      * Spring 自动收集所有 CacheWarmupTask 实现 Bean
      * 如果没有业务方实现，列表为空，预热跳过
      */
-    @Resource(required = false)
+    @Autowired(required = false)
     private List<CacheWarmupTask> warmupTasks;
 
     @Override
