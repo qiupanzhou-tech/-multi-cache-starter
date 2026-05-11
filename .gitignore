@@ -16,3 +16,4 @@ Thumbs.db
 
 # Spring Boot
 spring-boot-maven-plugin/
+dump.rdb
